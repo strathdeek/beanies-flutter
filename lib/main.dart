@@ -1,7 +1,9 @@
+import 'package:beanies/data/repositories/hive_setup.dart';
 import 'package:beanies/views/screens/dashboard_view.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  await initializeHive();
   runApp(MyApp());
 }
 
