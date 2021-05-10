@@ -17,6 +17,56 @@ class DashboardScreen extends StatelessWidget {
                   })
         ],
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Game in progress',
+                      style: Theme.of(context).textTheme.headline5,
+                    )),
+                SizedBox(
+                  height: 25,
+                ),
+                Card(
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                                onPressed: () {},
+                                child: Text('show all in progress'))
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  print('start new game');
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'New Game',
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      ),
     );
   }
 }
