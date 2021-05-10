@@ -8,5 +8,5 @@ Future<void> initializeHive() async {
 
   Hive.registerAdapter(UserAdapter());
 
-  Hive.openBox<User>(HiveUserBoxKey);
+  await Hive.openBox<User>(HiveUserBoxKey);
 }
