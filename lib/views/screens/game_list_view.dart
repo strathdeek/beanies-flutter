@@ -1,5 +1,4 @@
 import 'package:beanies/data/blocs/game/game_cubit.dart';
-import 'package:beanies/views/screens/new_game_view.dart';
 import 'package:beanies/views/widgets/game_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

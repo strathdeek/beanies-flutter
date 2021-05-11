@@ -1,9 +1,7 @@
-import 'dart:math';
-
 import 'package:beanies/data/blocs/game/game_cubit.dart';
 import 'package:beanies/data/blocs/user/user_cubit.dart';
 import 'package:beanies/data/models/game.dart';
-import 'package:beanies/views/widgets/score_summary_list_tile.dart';
+import 'package:beanies/views/widgets/score_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,63 +58,7 @@ class _GameScreenState extends State<GameScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: 100,
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: currentGame.users
-                                          .map<Widget>((userId) => Text(context
-                                              .read<UserCubit>()
-                                              .getUserName(userId)
-                                              .toString()))
-                                          .toList(),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              ListView.separated(
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    if (index + 1 == currentGame.currentRound) {
-                                      return Column(
-                                        children: [
-                                          Divider(
-                                            color: Colors.black54,
-                                          ),
-                                          ScoreSummaryListTile(
-                                              title: 'Sum',
-                                              scores:
-                                                  currentGame.getTotalScores()),
-                                        ],
-                                      );
-                                    } else {
-                                      return ScoreSummaryListTile(
-                                          title: 'Round ${index + 1}',
-                                          scores: currentGame.scores[index]);
-                                    }
-                                  },
-                                  separatorBuilder: (context, index) =>
-                                      Divider(),
-                                  itemCount: currentGame.currentRound),
-                            ],
-                          ),
-                        ),
-                      ),
+                      ScoreChart(currentGame),
                       Column(
                         children: [
                           Align(
@@ -124,7 +66,7 @@ class _GameScreenState extends State<GameScreen> {
                             child: Text(
                               currentGame.isDone
                                   ? '${context.read<UserCubit>().getUserName(currentGame.winner)} won!'
-                                  : 'Round ${currentGame.currentRound.toString()}',
+                                  : '${currentGame.currentRound.toCardName()}',
                               style: Theme.of(context).textTheme.headline3,
                             ),
                           ),
@@ -164,19 +106,6 @@ class _GameScreenState extends State<GameScreen> {
                                             if (_scoreInputControllers.values
                                                 .any((element) =>
                                                     element.text.isEmpty)) {
-                                              var scores = Map.fromEntries(
-                                                  widget.game.users.map<
-                                                      MapEntry<String,
-                                                          int>>((e) => MapEntry(
-                                                      e,
-                                                      Random().nextInt(50))));
-                                              context
-                                                  .read<GameCubit>()
-                                                  .addScores(_gameId, scores);
-                                              _scoreInputControllers
-                                                  .forEach((key, value) {
-                                                value.clear();
-                                              });
                                               return;
                                             }
                                             var scores = Map.fromEntries(

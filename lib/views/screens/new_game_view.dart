@@ -43,7 +43,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
                 ),
                 Card(
                   child: Container(
-                      padding: EdgeInsets.all(15),
+                      padding: EdgeInsets.only(top: 15, left: 15, right: 15),
                       child: BlocBuilder<UserCubit, UserState>(
                         builder: (context, state) {
                           return (state is UserLoadSuccess &&

@@ -45,7 +45,7 @@ class GameCubit extends Cubit<GameState> {
       var updatedScores = List<Map<String, int>>.from(game.scores);
       updatedScores.add(scores);
       if (game.currentRound == 14) {
-        var totalScores = game.getTotalScores();
+        var totalScores = game.toTotalScores();
         totalScores.entries.toList().sort((a, b) => a.value.compareTo(b.value));
         var updatedGame = game.copyWith(
             scores: updatedScores,
