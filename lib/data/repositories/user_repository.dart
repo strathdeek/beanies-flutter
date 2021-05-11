@@ -3,7 +3,7 @@ import 'package:beanies/data/models/user.dart';
 import 'package:hive/hive.dart';
 
 class UserRepository {
-  Box<User> _userBox = Hive.box(HiveUserBoxKey);
+  final Box<User> _userBox = Hive.box(HiveUserBoxKey);
 
   void add(User user) {
     _userBox.put(user.id, user);

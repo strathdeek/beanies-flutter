@@ -28,7 +28,8 @@ class GameCubit extends Cubit<GameState> {
           scores: <Map<String, int>>[],
           currentRound: 1,
           isDone: false,
-          winner: '');
+          winner: '',
+          date: DateTime.now());
       _gameRepository.add(game);
       emit(GameLoadSuccess(_gameRepository.get()));
       return game;

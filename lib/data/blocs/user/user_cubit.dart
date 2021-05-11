@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
-  UserRepository _userRepository;
+  final UserRepository _userRepository;
   UserCubit(this._userRepository) : super(UserLoadInProgress());
 
   void loadUsers() {

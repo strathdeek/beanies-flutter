@@ -1,6 +1,10 @@
+import 'package:beanies/data/blocs/game/game_cubit.dart';
+import 'package:beanies/views/screens/game_list_view.dart';
 import 'package:beanies/views/screens/new_game_view.dart';
 import 'package:beanies/views/screens/player_list_view.dart';
+import 'package:beanies/views/widgets/game_summary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -31,24 +35,43 @@ class DashboardScreen extends StatelessWidget {
                       'Game in progress',
                       style: Theme.of(context).textTheme.headline5,
                     )),
-                SizedBox(
-                  height: 25,
-                ),
-                Card(
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: BlocBuilder<GameCubit, GameState>(
+                    builder: (context, state) {
+                      if (state is GameLoadSuccess &&
+                          state.games.isNotEmpty &&
+                          state.games.any((element) => !element.isDone)) {
+                        var unfinishedGames = state.games
+                            .where((element) => !element.isDone)
+                            .toList();
+                        unfinishedGames
+                            .sort((a, b) => a.date.compareTo(b.date));
+                        return Column(
                           children: [
-                            TextButton(
-                                onPressed: () {},
-                                child: Text('show all in progress'))
+                            GameSummary(unfinishedGames.last),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GameListScreen()));
+                                    },
+                                    child: Text('show all in progress'))
+                              ],
+                            )
                           ],
-                        )
-                      ],
-                    ),
+                        );
+                      } else {
+                        return Text(
+                          'No games in progress...',
+                          style: Theme.of(context).textTheme.caption,
+                        );
+                      }
+                    },
                   ),
                 )
               ],

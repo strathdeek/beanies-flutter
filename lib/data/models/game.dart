@@ -19,6 +19,8 @@ class Game extends Equatable {
   final bool isDone;
   @HiveField(5)
   final String winner;
+  @HiveField(6)
+  final DateTime date;
 
   Game({
     required this.id,
@@ -27,6 +29,7 @@ class Game extends Equatable {
     required this.currentRound,
     required this.isDone,
     required this.winner,
+    required this.date,
   });
 
   @override
@@ -38,6 +41,7 @@ class Game extends Equatable {
       currentRound,
       isDone,
       winner,
+      date,
     ];
   }
 
@@ -48,6 +52,7 @@ class Game extends Equatable {
     int? currentRound,
     bool? isDone,
     String? winner,
+    DateTime? date,
   }) {
     return Game(
       id: id ?? this.id,
@@ -56,6 +61,7 @@ class Game extends Equatable {
       currentRound: currentRound ?? this.currentRound,
       isDone: isDone ?? this.isDone,
       winner: winner ?? this.winner,
+      date: date ?? this.date,
     );
   }
 
@@ -67,6 +73,7 @@ class Game extends Equatable {
       'currentRound': currentRound,
       'isDone': isDone,
       'winner': winner,
+      'date': date.millisecondsSinceEpoch,
     };
   }
 
@@ -78,6 +85,7 @@ class Game extends Equatable {
       currentRound: map['currentRound'],
       isDone: map['isDone'],
       winner: map['winner'],
+      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
     );
   }
 

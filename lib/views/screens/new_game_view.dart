@@ -2,6 +2,7 @@ import 'package:beanies/data/blocs/game/game_cubit.dart';
 import 'package:beanies/data/blocs/user/user_cubit.dart';
 import 'package:beanies/data/models/user.dart';
 import 'package:beanies/views/screens/game_view.dart';
+import 'package:beanies/views/screens/player_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,9 +16,15 @@ class _NewGameScreenState extends State<NewGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('SELECT PLAYERS'),
-      ),
+      appBar: AppBar(title: Text('SELECT PLAYERS'), actions: [
+        IconButton(
+            icon: Icon(Icons.supervised_user_circle_rounded),
+            onPressed: () => {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PlayerListScreen(),
+                  ))
+                })
+      ]),
       body: Padding(
         padding: EdgeInsets.all(30),
         child: Column(
@@ -62,7 +69,18 @@ class _NewGameScreenState extends State<NewGameScreen> {
                                   separatorBuilder: (context, index) =>
                                       Divider(),
                                   itemCount: state.users.length)
-                              : Text('nothin');
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'No players found...',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .caption
+                                          ?.copyWith(fontSize: 20),
+                                    ),
+                                  ],
+                                );
                         },
                       )),
                 )

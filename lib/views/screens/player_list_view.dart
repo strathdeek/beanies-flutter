@@ -12,6 +12,8 @@ class PlayerListScreen extends StatelessWidget {
         return AlertDialog(
           title: Text('Name'),
           content: TextField(
+            keyboardType: TextInputType.name,
+            autocorrect: false,
             controller: _nameController,
             autofocus: true,
           ),
