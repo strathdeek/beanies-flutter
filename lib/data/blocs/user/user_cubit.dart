@@ -49,4 +49,8 @@ class UserCubit extends Cubit<UserState> {
       emit(UserLoadFail(e.toString()));
     }
   }
+
+  String getUserName(String id) {
+    return _userRepository.get().firstWhere((element) => element.id == id).name;
+  }
 }

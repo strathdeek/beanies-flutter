@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
@@ -14,27 +15,47 @@ class Game extends Equatable {
   final List<Map<String, int>> scores;
   @HiveField(3)
   final int currentRound;
+  @HiveField(4)
+  final bool isDone;
+  @HiveField(5)
+  final String winner;
+
   Game({
     required this.id,
     required this.users,
     required this.scores,
     required this.currentRound,
+    required this.isDone,
+    required this.winner,
   });
 
   @override
-  List<Object> get props => [id, users, scores, currentRound];
+  List<Object> get props {
+    return [
+      id,
+      users,
+      scores,
+      currentRound,
+      isDone,
+      winner,
+    ];
+  }
 
   Game copyWith({
     String? id,
     List<String>? users,
     List<Map<String, int>>? scores,
     int? currentRound,
+    bool? isDone,
+    String? winner,
   }) {
     return Game(
       id: id ?? this.id,
       users: users ?? this.users,
       scores: scores ?? this.scores,
       currentRound: currentRound ?? this.currentRound,
+      isDone: isDone ?? this.isDone,
+      winner: winner ?? this.winner,
     );
   }
 
@@ -44,6 +65,8 @@ class Game extends Equatable {
       'users': users,
       'scores': scores,
       'currentRound': currentRound,
+      'isDone': isDone,
+      'winner': winner,
     };
   }
 
@@ -53,6 +76,8 @@ class Game extends Equatable {
       users: List<String>.from(map['users']),
       scores: List<Map<String, int>>.from(map['scores']?.map((x) => x)),
       currentRound: map['currentRound'],
+      isDone: map['isDone'],
+      winner: map['winner'],
     );
   }
 

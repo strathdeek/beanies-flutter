@@ -1,5 +1,7 @@
+import 'package:beanies/data/blocs/game/game_cubit.dart';
 import 'package:beanies/data/blocs/user/user_cubit.dart';
 import 'package:beanies/data/models/user.dart';
+import 'package:beanies/views/screens/game_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -68,7 +70,11 @@ class _NewGameScreenState extends State<NewGameScreen> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  print('Start game with ${_players.map((e) => e.name)}');
+                  var game = context.read<GameCubit>().createGame(_players);
+                  if (game != null) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => GameScreen(game: game)));
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

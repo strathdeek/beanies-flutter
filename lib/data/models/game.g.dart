@@ -23,13 +23,15 @@ class GameAdapter extends TypeAdapter<Game> {
           .map((dynamic e) => (e as Map).cast<String, int>())
           .toList(),
       currentRound: fields[3] as int,
+      isDone: fields[4] as bool,
+      winner: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Game obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -37,7 +39,11 @@ class GameAdapter extends TypeAdapter<Game> {
       ..writeByte(2)
       ..write(obj.scores)
       ..writeByte(3)
-      ..write(obj.currentRound);
+      ..write(obj.currentRound)
+      ..writeByte(4)
+      ..write(obj.isDone)
+      ..writeByte(5)
+      ..write(obj.winner);
   }
 
   @override
