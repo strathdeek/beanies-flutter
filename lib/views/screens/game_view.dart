@@ -2,10 +2,12 @@ import 'package:beanies/data/blocs/game/game_cubit.dart';
 import 'package:beanies/data/blocs/user/user_cubit.dart';
 import 'package:beanies/data/models/game.dart';
 import 'package:beanies/views/widgets/score_chart.dart';
+import 'package:beanies/views/widgets/score_summary_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:beanies/data/utils/extensions.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class GameScreen extends StatefulWidget {
   final Game game;
@@ -58,7 +60,19 @@ class _GameScreenState extends State<GameScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ScoreChart(currentGame),
+                      KeyboardVisibilityBuilder(
+                        builder: (context, isKeyboardVisible) =>
+                            isKeyboardVisible
+                                ? Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: ScoreSummaryListTile(
+                                          title: 'Sum',
+                                          scores: currentGame.toTotalScores()),
+                                    ),
+                                  )
+                                : ScoreChart(currentGame),
+                      ),
                       Column(
                         children: [
                           Align(
